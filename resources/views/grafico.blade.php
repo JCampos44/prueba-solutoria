@@ -28,6 +28,8 @@
 
             if (nombre != 0 && fecha_inicial != '' && fecha_final != '') {
 
+                $('#errores').addClass('d-none').empty();
+
                 grafico.destroy();
 
                 $.ajax({
@@ -36,6 +38,14 @@
                     success: function(data) {
 
                         console.log(data.indicadores);
+
+                        if (data.indicadores.length == 0) {
+                            $('#errores').removeClass('d-none').append(`
+                                No se encontraron resultados para ${nombre} en las fechas seleccionadas
+                            `);
+
+                            return false;
+                        }
 
                         let labels = [];
                         $.each(data.indicadores, function(index, value) {
@@ -60,14 +70,16 @@
                                 borderWidth: 1
                             }]
                             },
-                            options: {
-                                scales: {
-                                    y: {
-                                    beginAtZero: true
-                                    }
-                                }
-                            }
                         });
+                    },
+                    error: function(error) {
+                        const errors = error.responseJSON.errors;
+
+                        $.each(errors, function() {
+                            $('#errores').append($(this)[0] + '<br>');
+                        });
+
+                        $('#errores').removeClass('d-none')
                     }
                 });
             }
