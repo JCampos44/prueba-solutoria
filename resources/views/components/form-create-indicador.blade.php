@@ -82,7 +82,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: 'api/create-indicador',
+                url: '{{ env('APP_URL') }}/api/create-indicador',
                 data: {
                     'nombre': $('#nombre').val() != null ? indicadores[$('#nombre').val()].nombreIndicador : '',
                     'codigo': $('#codigo').val(),
