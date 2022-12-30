@@ -1,5 +1,3 @@
-[TOC]
-
 # Prueba Solutoria
 
 Mi solución para el ejercicio enviado por Solutoria
